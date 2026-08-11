@@ -2,11 +2,11 @@
   "name": "my-personal-website",
   "private": true,
   "version": "1.0.0",
-  "description": "Static personal website hosted on Netlify",
+  "description": "Static personal website",
   "scripts": {
     "lint:html": "htmlhint \"**/*.html\" --ignore \"node_modules/**\"",
     "lint:css": "stylelint \"**/*.css\" --ignore-pattern \"node_modules/**\"",
-    "lint:js": "eslint \"weather/script.js\" \"netlify/functions/**/*.js\"",
+    "lint:js": "eslint \"weather/script.js\"",
     "lint": "npm run lint:html && npm run lint:css && npm run lint:js"
   },
   "devDependencies": {
