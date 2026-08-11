@@ -6,6 +6,6 @@
   NODE_VERSION = "24"
 
 [[redirects]]
-  from = "/api/weather"
+  from = "/api/weather*"
   to = "/.netlify/functions/weather"
   status = 200
