@@ -3,14 +3,12 @@
 // Automatic weather detection based on the user's location.
 // Storing and displaying previous searches using local storage.
 
-const OPENWEATHER_API_KEY = '';
-
 $(document).ready(function () {
 	weatherFn('Somerville'); // Set Somerville as the initial city
 });
 
 async function weatherFn(cName) {
-	const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(cName)}&appid=${OPENWEATHER_API_KEY}&units=imperial`;
+	const url = `/api/weather?city=${encodeURIComponent(cName)}`;
 	try {
 		const res = await fetch(url);
 		const data = await res.json();
