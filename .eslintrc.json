@@ -13,17 +13,5 @@
     "jQuery": "readonly",
     "moment": "readonly"
   },
-  "extends": "eslint:recommended",
-  "overrides": [
-    {
-      "files": ["netlify/functions/**/*.js"],
-      "env": {
-        "browser": false,
-        "node": true
-      },
-      "parserOptions": {
-        "sourceType": "commonjs"
-      }
-    }
-  ]
+  "extends": "eslint:recommended"
 }
