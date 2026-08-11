@@ -41,3 +41,30 @@ netlify dev
 ```
 
 Set the `OPENWEATHER_API_KEY` environment variable (e.g. in a `.env` file or your Netlify site settings) before running the weather function.
+
+## Linting
+
+HTML, CSS, and JS are linted with `htmlhint`, `stylelint`, and `eslint`:
+
+```bash
+npm install
+npm run lint
+```
+
+## CI/CD
+
+Every push and pull request runs the `CI/CD` workflow ([.github/workflows/deploy.yml](.github/workflows/deploy.yml)):
+
+1. **lint** — installs dependencies and runs `npm run lint`.
+2. **deploy** — if lint passes, deploys to Netlify via `nwtgck/actions-netlify`:
+   - Pushes to `main` trigger a **production** deploy.
+   - Pull requests get a **preview** deploy, with the preview URL posted as a PR comment.
+
+Required GitHub Actions secrets (Settings → Secrets and variables → Actions):
+
+| Secret | Purpose |
+|---|---|
+| `NETLIFY_AUTH_TOKEN` | Netlify personal access token used to authenticate deploys |
+| `NETLIFY_SITE_ID` | Target Netlify site ID |
+
+`OPENWEATHER_API_KEY` is **not** a GitHub secret — it's only needed at runtime by the deployed function, so it's set in the Netlify site's own environment variables (Site settings → Environment variables).
