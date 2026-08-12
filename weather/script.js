@@ -8,10 +8,9 @@ $(document).ready(function () {
 });
 
 async function weatherFn(cName) {
-	// Calls our Netlify function proxy so the API key stays server-side.
-	const temp = `/api/weather?q=${encodeURIComponent(cName)}`;
+	const url = `/api/weather?city=${encodeURIComponent(cName)}`;
 	try {
-		const res = await fetch(temp);
+		const res = await fetch(url);
 		const data = await res.json();
 		if (res.ok) {
 			weatherShowFn(data);

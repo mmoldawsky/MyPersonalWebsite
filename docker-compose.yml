@@ -1,0 +1,11 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    container_name: my_personal_website
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
