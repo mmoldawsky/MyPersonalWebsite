@@ -8,7 +8,7 @@ $(document).ready(function () {
 });
 
 async function weatherFn(cName) {
-	const url = `/api/weather?city=${encodeURIComponent(cName)}`;
+	const url = `api/weather?city=${encodeURIComponent(cName)}`;
 	try {
 		const res = await fetch(url);
 		const data = await res.json();

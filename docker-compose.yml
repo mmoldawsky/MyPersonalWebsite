@@ -1,11 +1,26 @@
 services:
-  app:
+  gateway:
     build:
       context: .
+      dockerfile: ./gateway/Dockerfile
+    restart: unless-stopped
+    container_name: gateway
+    ports:
+      - "80:80"
+    depends_on:
+      - weather
+  weather:
+    build:
+      context: ./apps/weather
       dockerfile: Dockerfile
     restart: unless-stopped
-    container_name: my_personal_website
-    ports:
-      - "3000:3000"
+    container_name: weather_app
+    expose:
+      - "3000"
     env_file:
-      - .env
+      - ./apps/weather/.env
+
+  # python-app:
+  #   build:
+  #     context: ./apps/python-app
+  #   expose: ["8000"]
