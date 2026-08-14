@@ -10,7 +10,7 @@ const app = express();
 const OPENWEATHER_API_KEY = process.env.OPENWEATHER_API_KEY;
 const PORT = process.env.PORT || 3000;
 
-app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/api/weather', async (req, res) => {
   const city = req.query.city;
