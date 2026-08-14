@@ -1,21 +1,33 @@
 # My Personal Website
 
-A personal static website. It currently includes a landing page and a small weather app. This website will continue to be built out with more small projects that improve my life or are just something I'm interested in.
+A personal website made up of a static landing page and a small collection of apps, served behind an nginx reverse-proxy gateway via Docker Compose. This website will continue to be built out with more small projects that improve my life or are just something I'm interested in.
 
 ## Project Structure
 
 ```
-index.html            # Home page
+index.html             # Home page
 home.css               # Home page styles
-weather/
-  index.html           # Weather app markup
-  script.js            # Weather app client-side logic
-  styles.css           # Weather app styles
+docker-compose.yml     # Orchestrates the gateway and app containers
+gateway/
+  Dockerfile
+  nginx.conf            # Reverse proxy: serves the static site, routes /weather/ to the weather app
+apps/
+  weather/
+    Dockerfile
+    package.json
+    server.js           # Express server; serves the client and proxies OpenWeatherMap API requests
+    public/
+      index.html         # Weather app markup
+      script.js           # Weather app client-side logic
+      styles.css           # Weather app styles
 ```
 
 ## Technologies Used
 
-- **HTML/CSS/JavaScript** — plain, no framework or build step
+- **HTML/CSS/JavaScript** — no front-end framework or build step
+- **Node.js / Express** — backend server for the weather app, proxies requests to OpenWeatherMap
+- **Docker & Docker Compose** — containerizes the gateway and apps for local/production deployment
+- **nginx** — reverse-proxy gateway routing requests to the static site and app containers
 - **jQuery** — DOM manipulation in the weather app
 - **Moment.js** — date formatting
 - **Animate.css** & **Font Awesome** — UI animations and icons (loaded via CDN)
@@ -23,13 +35,25 @@ weather/
 
 ## Weather App
 
-The weather app (`/weather`) lets a user look up the current weather for a city. The client calls the OpenWeatherMap API directly using an API key set in `weather/script.js` (`OPENWEATHER_API_KEY`).
+The weather app (`/weather`) lets a user look up the current weather for a city. The client calls the app's own `/api/weather` endpoint, which is handled by the Express server in `apps/weather/server.js`. The server holds the OpenWeatherMap API key (`OPENWEATHER_API_KEY`, set via a `.env` file) and proxies the request, so the key is never exposed to the browser.
 
 ## Running Locally
 
-Since this is a static site with no build step, just open `index.html` (or `weather/index.html`) in a browser, or serve the folder with any static file server.
+The site is designed to run via Docker Compose:
 
-Set your own OpenWeatherMap API key in `weather/script.js` before using the weather app.
+```bash
+docker compose up --build
+```
+
+This builds the gateway and weather app containers and serves the site on `http://localhost`. Set `OPENWEATHER_API_KEY` in an `.env` file at `apps/weather/.env` before starting.
+
+Alternatively, the weather app can be run standalone for development:
+
+```bash
+cd apps/weather
+npm install
+npm run dev
+```
 
 ## Linting
 
